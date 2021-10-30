@@ -1,5 +1,3 @@
-#scylla
-
 How to use
 
 1. Edit scylla.yml file according tou your configuration
