@@ -1,0 +1,63 @@
+- name: Installin Scylla
+  hosts:
+    - all
+  any_errors_fatal: true
+  become: true
+  
+  tasks:
+    - name: Add scylla apt signing key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 5e08fbd8b5d6ec9c
+
+    - name: Download PPA source
+      get_url:
+        url: 'http://downloads.scylladb.com/deb/ubuntu/scylla-4.4-bionic.list'
+        dest: /etc/apt/sources.list.d/scylla.list
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Update repositories cache and install scylla
+      apt:
+        name: scylla
+        update_cache: yes
+        
+    - name: Install java
+      apt:
+        name:
+          - openjdk-8-jre-headless
+        update_cache: yes
+    
+    - name: update-java-alternatives 
+      shell: >
+        update-java-alternatives 
+        --jre-headless 
+        -s java-1.8.0-openjdk-amd64
+
+    - name: setup scylla
+      shell: >
+        scylla_setup
+        --no-raid-setup
+        --no-coredump-setup
+        --no-sysconfig-setup
+        --no-io-setup
+        --no-version-check
+        --no-node-exporter
+        --no-fstrim-setup
+      register: result
+    - debug: msg="{{ result.stdout_lines }}"
+    
+    - name: Copy scylla.yaml file
+      copy:
+        src: scylla.yaml
+        dest: /etc/scylla/scylla.yaml
+        owner: root
+        group: root
+        mode: 0644
+        
+    - name: restart scylla
+      service:
+        name: scylla-server
+        state: restarted
+        enabled: yes
