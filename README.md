@@ -1,7 +1,9 @@
-How to use
+##How to use
 
-1. Edit scylla.yml file according tou your configuration
+1. Make sure your hosts are availavle via ssh without a password
 
-2. Add servers to the inventory file /etc/absible/hosts
+2. Edit scylla.yml file according tou your configuration
 
-3. Run the playbook: ansible-playbook i.yml -b
+3. Add servers to the inventory file /etc/absible/hosts
+
+4. Run the playbook: ansible-playbook i.yml -b
