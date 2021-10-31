@@ -1,4 +1,4 @@
-- name: Installin Scylla
+- name: Installing Scylla
   hosts:
     - all
   any_errors_fatal: true
