@@ -1,5 +1,5 @@
 
- ##How to use
+# How to use
 
 1. Make sure your hosts are availavle via ssh without a password
 
@@ -10,10 +10,8 @@
 4. Run the playbook: ansible-playbook i.yml -b
 
 
- ##Testing 
+# Testing 
 
-
-# Working with and testing Scylla
 
 ## Running cqlsh:
 
