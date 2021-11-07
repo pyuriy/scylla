@@ -23,10 +23,13 @@
         name: scylla
         update_cache: yes
         
-    - name: Install java
+    - name: Install java and other packages
       apt:
         name:
           - openjdk-8-jre-headless
+          - libopts25
+          - ntp
+          - ntpdate
         update_cache: yes
     
     - name: update-java-alternatives 
@@ -39,25 +42,48 @@
       shell: >
         scylla_setup
         --no-raid-setup
+        --nic ens3
+        --no-ec2-check
         --no-coredump-setup
-        --no-sysconfig-setup
-        --no-io-setup
+        --io-setup 1
         --no-version-check
-        --no-node-exporter
         --no-fstrim-setup
+        --no-rsyslog-setup
       register: result
-    - debug: msg="{{ result.stdout_lines }}"
+    - debug: msg= "{{ result.stdout_lines }}"
     
     - name: Copy scylla.yaml file
-      copy:
-        src: scylla.yaml
+      template:
+        src: scylla.yaml.j2
         dest: /etc/scylla/scylla.yaml
         owner: root
         group: root
         mode: 0644
         
+#    - name: Copy scylla.yaml file
+#      copy:
+#        src: scylla.yaml
+#        dest: /etc/scylla/scylla.yaml
+#        owner: root
+#        group: root
+#        mode: 0644
+#
+    - name: Configure CPU
+      shell:
+        cmd: scylla_cpuset_setup --cpuset 1
+      register: result
+    - debug: msg= "{{ result.stdout_lines }}"
+
+    - name: Configure memory
+      shell:
+        cmd: scylla_memory_setup --memory 2G
+      register: result
+    - debug: msg= "{{ result.stdout_lines }}"
+
     - name: restart scylla
       service:
         name: scylla-server
         state: started
         enabled: yes
+      register: result
+    - debug: msg= "{{ result.stdout_lines }}"
