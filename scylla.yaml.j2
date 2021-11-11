@@ -243,6 +243,7 @@ batch_size_fail_threshold_in_kb: 50
 #   to authenticate in the same manner as PasswordAuthenticator, but improper credentials
 #   result in being logged in as an anonymous user. Use for upgrading clusters' auth.
 # authenticator: AllowAllAuthenticator
+authenticator: PasswordAuthenticator
 
 # Authorization backend, implementing IAuthorizer; used to limit access/provide permissions
 # Out of the box, Scylla provides org.apache.cassandra.auth.{AllowAllAuthorizer,
@@ -255,6 +256,7 @@ batch_size_fail_threshold_in_kb: 50
 #   authorizing permission management. Otherwise, it allows all. Use for upgrading
 #   clusters' auth.
 # authorizer: AllowAllAuthorizer
+authorizer: CassandraAuthorizer
 
 # initial_token allows you to specify tokens manually.  While you can use # it with
 # vnodes (num_tokens > 1, above) -- in which case you should provide a 

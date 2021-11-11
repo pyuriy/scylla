@@ -9,6 +9,12 @@
 
 4. Run the playbook: ansible-playbook i.yml -b
 
+5. Improve authentication with replication factor equal to the number of nodes:
+_ALTER KEYSPACE system_auth WITH REPLICATION =_
+_  { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };_
+and then restart scylla and repair the system_auth keyspace:
+_sudo systemctl restart scylla-server.service_
+_sudo nodetool repair system_aut_
 
 # Testing 
 

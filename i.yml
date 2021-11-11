@@ -60,14 +60,6 @@
         group: root
         mode: 0644
         
-#    - name: Copy scylla.yaml file
-#      copy:
-#        src: scylla.yaml
-#        dest: /etc/scylla/scylla.yaml
-#        owner: root
-#        group: root
-#        mode: 0644
-#
     - name: Configure CPU
       shell:
         cmd: scylla_cpuset_setup --cpuset 1
@@ -85,5 +77,5 @@
         name: scylla-server
         state: started
         enabled: yes
-      register: result
-    - debug: msg= "{{ result.stdout_lines }}"
+#      register: result
+#    - debug: msg= "{{ result.stdout_lines }}"
