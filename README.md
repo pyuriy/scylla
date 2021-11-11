@@ -10,6 +10,7 @@
 4. Run the playbook: ansible-playbook i.yml -b
 
 5. Set replication factor for system_auth keyspace equal to the number of nodes:
+
 cqlsh> ALTER KEYSPACE system_auth WITH REPLICATION =
    ...   { 'class' : 'SimpleStrategy', 'replication_factor' : 3 };
 cqlsh> exit;
