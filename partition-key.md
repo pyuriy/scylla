@@ -1,6 +1,8 @@
+# Partition key
+
 In ScyllaDB, a **partition key** is a critical component of the primary key used to determine how data is distributed and stored across the cluster. It is the first part of the primary key and is used to identify which node or nodes in the cluster will store a particular row of data. Here's a concise explanation:
 
-- **Purpose**: The partition key uniquely identifies a partition, which is a collection of rows that share the same partition key value. It determines the data's physical location in the distributed system by hashing the partition key value to map it to a specific node or replica.
+- **Purpose**: The partition key uniquely identifies a partition, which is a collection of rows that share the same  partition key value. It determines the data's physical location in the distributed system by hashing the partition key value to map it to a specific node or replica.
 
 - **How It Works**:
   - ScyllaDB uses a hash function (Murmur3 by default) on the partition key to compute a token, which dictates the node where the data resides.
@@ -16,6 +18,7 @@ In ScyllaDB, a **partition key** is a critical component of the primary key used
   - **Immutability**: Once set, the partition key for a row cannot be changed without deleting and reinserting the row.
 
 - **Example**:
+
   ```cql
   CREATE TABLE users (
       user_id text,
@@ -24,10 +27,11 @@ In ScyllaDB, a **partition key** is a critical component of the primary key used
       PRIMARY KEY (user_id)
   );
   ```
+
   Here, `user_id` is the partition key. All rows with the same `user_id` are stored in the same partition on a specific node.
 
 - **Best Practices**:
   - Choose a partition key that ensures even data distribution to avoid hotspots (e.g., avoid keys with low cardinality like "country" if you have few countries).
   - Design partition keys based on your query patterns to minimize cross-node queries.
 
-In summary, the partition key in ScyllaDB is essential for data distribution and efficient querying, acting as the primary mechanism to locate and organize data in the cluster. For more details, you can check ScyllaDB's official documentation at https://docs.scylladb.com/.
+In summary, the partition key in ScyllaDB is essential for data distribution and efficient querying, acting as the primary mechanism to locate and organize data in the cluster. For more details, you can check ScyllaDB's official documentation at <https://docs.scylladb.com/>.
