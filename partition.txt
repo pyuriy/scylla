@@ -1,0 +1,20 @@
+A partition in ScyllaDB is a subset of data stored on a node and replicated across nodes in the cluster. It can be understood in two ways:
+
+In CQL (Cassandra Query Language):
+A partition appears as a group of sorted rows and serves as the unit of access for queried data. Most queries access a single partition.
+
+On the physical storage layer:
+A partition is a unit of data stored on a node, identified by a partition key.
+
+Key properties of a partition include:
+
+All rows belonging to the same partition are guaranteed to be stored on the same set of replica nodes. This means the partition key defines which rows are localized together in the cluster.
+This localization helps optimize queries by minimizing the number of nodes contacted when fetching related rows.
+Updates to all rows within a single partition are performed atomically and in isolation, which is not the case across different partitions.
+However, if a partition key groups too much data, it can create a hotspot because all that data is stored on the same set of nodes.
+For more details, you can refer to the ScyllaDB documentation on partitions and data definition.
+
+
+Sources
+ScyllaDB Ring Architecture - Overview | ScyllaDB Docs
+Data Definition | ScyllaDB Docs
