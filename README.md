@@ -1,5 +1,8 @@
+# My ScyllaBD experience
 
-# How to use
+This is an open repository at Github to keep all my related to ScyllaBD experience
+
+## How to use
 
 1. Make sure your hosts are availavle via ssh without a password
 
@@ -24,10 +27,10 @@ $sudo systemctl restart scylla-server.service
 $sudo nodetool repair system_aut
 
 
-# Testing 
+## Testing 
 
 
-## Running cqlsh:
+### Running cqlsh:
 
 _root@ubuntu3:~# cqlsh ubuntu3 9042_
 
